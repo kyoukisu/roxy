@@ -51,19 +51,20 @@ pub fn new(proxy: &str) -> Result<Roxy,RoxyError> {
     Roxy::new(proxy)
 }
 
+// Changes `protocol://aaa:aaa@bbb:bbb` to `protocol://bbb:bbb@aaa:aaa`
+pub fn change_proxy_format(proxy: &str) -> String {
+    let mut parts: Vec<&str> = proxy.split('@').collect();
+    let auth = parts.remove(0).trim_start_matches("http://");
+    let mut auth_parts: Vec<&str> = auth.split(':').collect();
+    let login = auth_parts.remove(0);
+    let password = auth_parts.remove(0);
+    let mut endpoint_parts: Vec<&str> = parts[0].split(':').collect();
+    let ip = endpoint_parts.remove(0);
+    let port = endpoint_parts.remove(0);
+    format!("http://{}:{}@{}:{}", ip, port, login, password)
+}
+
 impl Roxy {
-    // Changes `protocol://aaa:aaa@bbb:bbb` to `protocol://bbb:bbb@aaa:aaa`
-    pub fn change_proxy_format(proxy: &str) -> String {
-        let mut parts: Vec<&str> = proxy.split('@').collect();
-        let auth = parts.remove(0).trim_start_matches("http://");
-        let mut auth_parts: Vec<&str> = auth.split(':').collect();
-        let login = auth_parts.remove(0);
-        let password = auth_parts.remove(0);
-        let mut endpoint_parts: Vec<&str> = parts[0].split(':').collect();
-        let ip = endpoint_parts.remove(0);
-        let port = endpoint_parts.remove(0);
-        format!("http://{}:{}@{}:{}", ip, port, login, password)
-    }
     // protocol://login:password@ip:port
     pub fn lpip(&self) -> String{
         if let (Some(login),Some(password))=(self.login.clone(),self.password.clone()){
