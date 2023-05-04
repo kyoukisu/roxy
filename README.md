@@ -14,7 +14,7 @@ To start using Roxy add dependency in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-roxy = { version = "0.0.1", git = "http://github.com/kyoukisu/roxy }
+roxy = { version = "0.0.1", git = "http://github.com/kyoukisu/roxy" }
 ```
 
 # Example
