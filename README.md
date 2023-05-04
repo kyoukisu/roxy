@@ -4,9 +4,7 @@
 
 Simple proxy auto formatter for Rust.
 
-<div align="center">
-  <img align="center" src="https://n.opnxng.com/pic/orig/media%2FErdsQfpW4AAV6t4.jpg" style="border-radius:10px" />
-</div>
+<img src="https://n.opnxng.com/pic/orig/media%2FErdsQfpW4AAV6t4.jpg" style="border-radius:10px">
 
 ___
 
