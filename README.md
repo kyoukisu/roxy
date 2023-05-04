@@ -34,6 +34,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
     println!("{}",webshare_proxy.lpip());
     println!("{}",webshare_proxy.iplp());
 
+    // or swap on the fly
+    let proxy1 = "example.com:80@login:password";
+    let proxy2 = roxy::change_proxy_format(proxy1);
+    //  proxy2 = "login:password@example.com:80"
+
     Ok(())
 }
 ```
