@@ -47,7 +47,7 @@ pub struct Roxy {
     pub password: Option<String>,
 }
 
-pub fn new(proxy: &str) -> Result<Roxy,RoxyError> {
+pub fn new(proxy: String) -> Result<Roxy,RoxyError<'static>> {
     Roxy::new(proxy)
 }
 
@@ -81,7 +81,7 @@ impl Roxy {
             format!("{}{}:{}",self.protocol,self.ip,self.port)
         }
     }
-    pub fn new(proxy: &str) -> Result<Self,RoxyError> {
+    pub fn new(proxy: String) -> Result<Self,RoxyError<'static>> {
         let protocol = RoxyType::from_str(match proxy.find("://") {
             Some(index) => &proxy[..index + 3],
             None => "http://",
@@ -90,7 +90,7 @@ impl Roxy {
         let str_protocol = str_protocol.as_str();
         let remaining: &str = match proxy.strip_prefix(str_protocol){
             Some(a)=>a,
-            None=>proxy
+            None=>&proxy
         };
         let sobaka_count = remaining.matches('@').count();
         match sobaka_count {
